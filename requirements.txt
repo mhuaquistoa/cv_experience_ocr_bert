@@ -1,0 +1,29 @@
+# Python 3.11 recommended (PaddlePaddle does not support the newest Python versions).
+# Install PaddlePaddle FIRST from its own index (CPU or GPU build):
+#   CPU: pip install paddlepaddle==3.1.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+#   GPU (CUDA 11.8): pip install paddlepaddle-gpu==3.1.0 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+# Then: pip install -r requirements.txt
+paddlepaddle==3.1.0
+paddleocr==3.1.0
+
+# NLP / models
+torch==2.7.1
+transformers==4.53.2
+datasets==4.0.0
+accelerate==1.9.0
+sentence-transformers==5.0.0
+
+# Data / ML
+pandas==2.3.1
+numpy==2.2.6
+scikit-learn==1.7.1
+jiwer==4.0.0
+pyarrow==21.0.0
+pillow==11.3.0
+pdf2image==1.17.0
+
+# Visualization / app
+matplotlib==3.10.3
+seaborn==0.13.2
+plotly==6.2.0
+streamlit==1.47.0
