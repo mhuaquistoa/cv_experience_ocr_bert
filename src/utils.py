@@ -33,7 +33,7 @@ OCCUPATIONS = [
     "accountants_and_auditors",
     "construction_laborers",
 ]
-N_PER_OCCUPATION = 800
+N_PER_OCCUPATION = 400  # minimum allowed (2,000 total) given the compute/time budget
 
 # Target
 TARGET = "exp_year"
@@ -84,3 +84,57 @@ def save_json(obj, path: Path) -> None:
 def load_json(path: Path):
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+# ---------------------------------------------------------------------------
+# Shared data access for the modelling stages
+# ---------------------------------------------------------------------------
+import re  # noqa: E402
+
+import pandas as pd  # noqa: E402
+
+TEXT_VARIANTS = ["raw", "clean", "clean_conf"]  # Question 3: OCR cleaning sensitivity
+MAIN_VARIANT = "clean"
+PREDS = METRICS / "preds"
+PROBE_SHIFT = 5
+N_PROBE = 20
+
+
+def read_csv(path) -> pd.DataFrame:
+    return pd.read_csv(path, dtype={"id": str})
+
+
+def shift_years(text: str, shift: int = PROBE_SHIFT) -> str:
+    """Probe for Question 1: move every 4-digit year (1950-2029) by `shift` years."""
+    return re.sub(r"\b(19[5-9]\d|20[0-2]\d)\b", lambda m: str(int(m.group(1)) + shift), text)
+
+
+def load_sets(variant: str = MAIN_VARIANT) -> dict:
+    """Return {set_name: DataFrame[id, occupation, exp_year, text]} for every evaluation set.
+
+    Sets: train, val, test, test_ref (test CVs with the reference text, Question 2 only)
+    and probe (20 test CVs with every year shifted, Question 1 only).
+    """
+    cvs = read_csv(PROCESSED / "cvs.csv")
+    out = {}
+    for name in ["train", "val", "test"]:
+        ids = read_csv(SPLITS / f"{name}.csv")[["id"]]
+        df = ids.merge(cvs, on="id", how="left")
+        df["text"] = df[f"text_{variant}"].fillna("")
+        out[name] = df
+    out["test_ref"] = out["test"].assign(text=out["test"]["text_ref"].fillna(""))
+    probe = out["test"].sample(N_PROBE, random_state=SEED)
+    out["probe"] = probe.assign(text=probe["text"].map(shift_years))
+    return out
+
+
+def save_predictions(model: str, variant: str, sets: dict, preds: dict, timing: dict) -> None:
+    """Save long-format predictions (id, set, y_true, y_pred) and timing for one model/variant."""
+    PREDS.mkdir(parents=True, exist_ok=True)
+    frames = []
+    for name, yhat in preds.items():
+        df = sets[name]
+        frames.append(pd.DataFrame({"id": df["id"].values, "set": name,
+                                    "y_true": df[TARGET].values, "y_pred": clip_years(yhat)}))
+    pd.concat(frames).to_csv(PREDS / f"{model}__{variant}.csv", index=False)
+    save_json(timing, PREDS / f"{model}__{variant}_timing.json")
