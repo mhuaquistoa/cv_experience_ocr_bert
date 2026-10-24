@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# Data: images and raw downloads are regenerated with src/download_data.py
+data/raw/*
+!data/raw/.gitkeep
+
+# Model weights are regenerated with src/baseline_*.py and src/train_bert.py
+models/**/*
+!models/baselines/.gitkeep
+!models/bert/.gitkeep
+*.safetensors
+*.bin
+*.pt
+*.pkl
+*.joblib
+
+# Hugging Face / logs
+.cache/
+wandb/
+runs/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
