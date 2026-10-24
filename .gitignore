@@ -11,9 +11,8 @@ data/raw/*
 !data/raw/.gitkeep
 
 # Model weights are regenerated with src/baseline_*.py and src/train_bert.py
-models/**/*
-!models/baselines/.gitkeep
-!models/bert/.gitkeep
+models/*/*
+!models/*/.gitkeep
 *.safetensors
 *.bin
 *.pt
