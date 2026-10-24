@@ -61,7 +61,7 @@ seed 42 (`data/splits/`). All tuning uses the validation set; the test set is us
 | Median | Always predicts the training-set median (TBD years). |
 | TF-IDF + Ridge | Word 1–2-grams + char 3–5-grams, sublinear TF. **Digits and years kept** as tokens (they are the evidence); removing them is tested in Q3. Ridge α tuned on validation. |
 | Embeddings + Ridge | Frozen `BAAI/bge-small-en-v1.5`. CVs longer than the 512-token limit are split into 250-word windows; the CV vector is the mean of the window embeddings. Ridge α tuned on validation. |
-| Fine-tuned BERT | `distilbert-base-uncased`, `num_labels=1`, `problem_type="regression"`, MSE loss, target ÷ 20 during training. Max length 512 with **head + tail** truncation (first 320 + last 190 tokens): the head holds recent jobs, the tail holds the oldest jobs and education. lr 5e-5, batch 16, up to 10 epochs, early stopping on validation MAE (patience 2), seed 42, fp16 on an RTX 5050 Laptop GPU (8 GB). CVs longer than 512 tokens: TBD%; years surviving truncation: TBD%. Training time: TBD. |
+| Fine-tuned BERT | `distilbert-base-uncased`, `num_labels=1`, `problem_type="regression"`, MSE loss, target ÷ 20 during training. Max length 512 with **head + tail** truncation (first 320 + last 190 tokens): the head holds recent jobs, the tail holds the oldest jobs and education. lr 5e-5, batch 16, up to 15 epochs, early stopping on validation MAE (patience 3), seed 42, fp16 on an RTX 5050 Laptop GPU (8 GB). CVs longer than 512 tokens: TBD%; years surviving truncation: TBD%. Training time: TBD. |
 
 ## Results
 

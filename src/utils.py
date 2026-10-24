@@ -152,7 +152,9 @@ def load_sets(variant: str = MAIN_VARIANT) -> dict:
     out["test_ref"] = out["test"].assign(text=out["test"]["text_ref"].fillna(""))
     probe = out["test"].sample(N_PROBE, random_state=SEED)
     out["probe"] = probe.assign(text=probe["text"].map(shift_years))
-    dropped = out["test"]["text"].map(drop_oldest_job)
+    # built from the cleaned text for every variant (raw OCR has no parseable date ranges);
+    # the probes are only analysed for the main variant
+    dropped = out["test"][f"text_{MAIN_VARIANT}"].fillna("").map(drop_oldest_job)
     cand = out["test"].assign(text=[d[0] for d in dropped], expected_change=[-(d[1] or 0) for d in dropped])
     cand = cand[[d[1] is not None for d in dropped]]
     out["probe_drop"] = cand.sample(min(N_PROBE, len(cand)), random_state=SEED)

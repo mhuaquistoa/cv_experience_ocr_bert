@@ -19,7 +19,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from utils import (EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_years, ensure_dirs,
                    load_sets, save_predictions)
 
-ALPHAS = [0.1, 0.3, 1, 3, 10, 30]
+ALPHAS = [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
 
 
 def strip_digits(text: str) -> str:

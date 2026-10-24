@@ -18,7 +18,7 @@ from utils import (EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_
 
 ENCODER = "BAAI/bge-small-en-v1.5"
 CHUNK_WORDS = 250  # ~350 tokens, safely under the 512-token limit
-ALPHAS = [0.1, 0.3, 1, 3, 10, 30]
+ALPHAS = [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
 
 
 def chunks(text: str) -> list:
