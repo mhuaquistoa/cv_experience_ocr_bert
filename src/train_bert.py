@@ -22,7 +22,7 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
 
-from utils import CAP, MAIN_VARIANT, MODELS, TARGET, ensure_dirs, load_sets, save_predictions, set_seed
+from utils import CAP, EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, ensure_dirs, load_sets, save_predictions, set_seed
 
 MODEL_NAME = "distilbert-base-uncased"
 MAX_LEN = 512
@@ -137,7 +137,7 @@ def main() -> None:
 
     t0 = time.perf_counter()
     preds = {name: predict(model, tok, sets[name]["text"].tolist(), args.strategy, device)
-             for name in ["val", "test", "test_ref", "probe"]}
+             for name in EVAL_SETS}
     infer = (time.perf_counter() - t0) / sum(len(sets[n]) for n in preds)
 
     tag = "bert" + ("" if args.loss == "mse" else "_huber") + ("" if args.strategy == "head_tail" else "_head")

@@ -54,7 +54,7 @@ def find_column_gap(lines: list, width: int):
         x0, _, x1, _ = ln["box"]
         cover[max(0, x0):min(width, x1) + 1] += 1
     lo, hi = int(0.2 * width), int(0.8 * width)
-    tol = max(2, int(0.08 * len(lines)))  # a few full-width headers may cross the gutter
+    tol = max(3, int(0.15 * len(lines)))  # name, headers and summary lines may cross the gutter
     empty = np.append(cover[lo:hi] <= tol, False)
     best_len, best_start, start = 0, None, None
     for i, e in enumerate(empty):
@@ -111,6 +111,7 @@ URL = re.compile(r"\b(?:https?://|www\.)\S+|\b(?:linkedin|github)\.com/\S*", re.
 PHONE = re.compile(r"(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b")
 STREET = re.compile(r"\b\d{1,6}\s+(?:[A-Z][a-z]+\s){1,3}(?:St|Street|Ave|Avenue|Rd|Road|Blvd|Dr|"
                     r"Drive|Ln|Lane|Ct|Court|Way|Pl|Place)\b\.?(?:,?\s*(?:Apt|Suite|Unit)\s*\w+)?")
+STATE_USA = re.compile(r"\b[A-Z]{2},?\s*USA\b")  # PopResume header line: "AL, USA | phone | email"
 CITY_STATE_ZIP = re.compile(r"\b[A-Z][a-zA-Z .]+,\s*[A-Z]{2}(?:\s*\d{5}(?:-\d{4})?)?\b(?!\w)")
 
 # Direct answers: total experience, age, date of birth. Job dates and graduation years stay.
@@ -135,7 +136,7 @@ def mask_direct_answers(text: str):
 
 
 def remove_pii(text: str) -> str:
-    for pat in (EMAIL, URL, PHONE, STREET, CITY_STATE_ZIP):
+    for pat in (EMAIL, URL, PHONE, STATE_USA, STREET, CITY_STATE_ZIP):
         text = pat.sub(" ", text)
     return text
 
