@@ -151,7 +151,16 @@ def drop_name_line(text: str) -> str:
     return text
 
 
+GLUED_RANGE = re.compile(r"\b((?:19|20)\d{2}\.\d{2})\s?((?:19|20)\d{2}\.\d{2})\b")
+
+
+def repair_date_ranges(text: str) -> str:
+    """PaddleOCR drops the en dash in 'YYYY.MM–YYYY.MM' (read as 'YYYY.MMYYYY.MM'); put it back."""
+    return GLUED_RANGE.sub(r"\1-\2", text)
+
+
 def normalize(text: str) -> str:
+    text = repair_date_ranges(text)
     text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)          # hyphenation across lines
     text = re.sub(r"[‒-―−]", "-", text)    # unify dashes in date ranges
     text = re.sub(r"[ \t]+", " ", text)

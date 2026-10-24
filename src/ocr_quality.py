@@ -10,7 +10,7 @@ from collections import Counter
 import jiwer
 import pandas as pd
 
-from preprocessing import reading_order
+from preprocessing import reading_order, repair_date_ranges
 from utils import METRICS, OCR_DIR, RAW, ensure_dirs, load_json, read_csv, save_json
 
 YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
@@ -39,20 +39,24 @@ def main() -> None:
         path = OCR_DIR / f"{rid}.json"
         if not path.exists() or rid not in ref.index:
             continue
-        r, h = norm(str(ref[rid])), norm(reading_order(load_json(path)))
+        raw_ocr = reading_order(load_json(path))
+        r, h = norm(str(ref[rid])), norm(raw_ocr)
         yr, n_years = years_recall(r, h)
+        yr_fix, _ = years_recall(r, norm(repair_date_ranges(raw_ocr)))
         rows.append({"id": rid, "occupation": occ, "cer": jiwer.cer(r, h), "wer": jiwer.wer(r, h),
-                     "years_recall": yr, "n_ref_years": n_years})
+                     "years_recall": yr, "years_recall_repaired": yr_fix, "n_ref_years": n_years})
     df = pd.DataFrame(rows)
     df.to_csv(METRICS / "ocr_quality_per_cv.csv", index=False)
 
-    by_occ = df.groupby("occupation")[["cer", "wer", "years_recall"]].mean().round(4)
+    by_occ = df.groupby("occupation")[["cer", "wer", "years_recall", "years_recall_repaired"]].mean().round(4)
     summary = {
         "n_cvs": len(df),
         "cer_mean": round(df["cer"].mean(), 4), "cer_median": round(df["cer"].median(), 4),
         "wer_mean": round(df["wer"].mean(), 4), "wer_median": round(df["wer"].median(), 4),
         "years_read_correctly": round(df["years_recall"].mean(), 4),
         "cvs_with_all_years_correct": round((df["years_recall"] == 1).mean(), 4),
+        "years_read_correctly_after_dash_repair": round(df["years_recall_repaired"].mean(), 4),
+        "cvs_with_all_years_correct_after_repair": round((df["years_recall_repaired"] == 1).mean(), 4),
         "by_occupation": by_occ.to_dict(orient="index"),
     }
     save_json(summary, METRICS / "ocr_quality_summary.json")

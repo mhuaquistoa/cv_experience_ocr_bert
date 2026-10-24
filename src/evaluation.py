@@ -18,7 +18,7 @@ from utils import (BAND_LABELS, MAIN_VARIANT, PREDS, PROCESSED, SEED, TABLES, TA
                    load_json, read_csv, to_band)
 
 MAIN_MODELS = {"median": "Median", "tfidf": "TF-IDF + Ridge", "embeddings": "Embeddings + Ridge",
-               "bert": "Fine-tuned BERT"}
+               "bert": "Fine-tuned BERT", "rules": "Rule-based date sum (bonus)"}
 N_BOOT = 2000
 
 
@@ -78,7 +78,7 @@ def main() -> None:
     if "bert" in test:
         pb = test["bert"].loc[ids, "y_pred"].values
         gains = []
-        for key in ["median", "tfidf", "embeddings"]:
+        for key in ["median", "tfidf", "embeddings", "rules"]:
             if key in test:
                 g, lo, hi = bootstrap_gain(y, test[key].loc[ids, "y_pred"].values, pb, rng)
                 gains.append({"Baseline": MAIN_MODELS[key], "MAE reduction (years)": g, "CI 2.5%": lo,

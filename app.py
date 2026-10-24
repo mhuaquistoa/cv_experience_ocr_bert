@@ -20,7 +20,7 @@ st.title("Predicting Years of Experience from CV Images")
 st.caption("PaddleOCR + fine-tuned BERT vs median, TF-IDF and sentence-embedding baselines · PopResume (synthetic CVs)")
 
 MODEL_LABELS = {"median": "Median", "tfidf": "TF-IDF + Ridge", "embeddings": "Embeddings + Ridge",
-                "bert": "Fine-tuned BERT"}
+                "bert": "Fine-tuned BERT", "rules": "Rule-based (bonus)"}
 
 
 def jload(path: Path):
