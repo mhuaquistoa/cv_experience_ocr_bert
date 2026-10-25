@@ -45,19 +45,27 @@ def sample_occupation(occupation: str, files: list, n: int) -> list:
     ds = ds.filter(lambda r: not r["has_photo"]).shuffle(seed=SEED, buffer_size=5000)
     rows = []
     for r in ds.take(n):
-        rid = str(r["id"])
+        rid = uid(r["job"], r["id"])
         save_image(r["image"], RAW_IMAGES / f"{rid}.png")
         row = {"id": rid, "occupation": occupation, "exp_year_raw": r[TARGET]}
         row.update({c: r.get(c) for c in META_COLS})
         rows.append(row)
-    print(f"  {occupation}: {len(rows)} CVs")
+    print(f"  {occupation}: {len(rows)} CVs", flush=True)
     return rows
 
 
-def reference_text(ids: set) -> pd.DataFrame:
-    ds = load_dataset(HF_DATASET, "text", split="train")
-    ds = ds.filter(lambda r: str(r["id"]) in ids)
-    return pd.DataFrame({"id": [str(i) for i in ds["id"]], "text": ds["text"]})
+def uid(job: str, rid) -> str:
+    """Resume ids are zero-padded per occupation, so the key is <job>_<id>."""
+    return f"{job}_{rid}"
+
+
+def reference_text(ids: set, occupations: list) -> pd.DataFrame:
+    frames = []
+    for occ in occupations:
+        df = pd.read_parquet(f"hf://datasets/{HF_DATASET}/data/text/{occ}.parquet", columns=["id", "job", "text"])
+        df["id"] = [uid(j, i) for j, i in zip(df["job"], df["id"])]
+        frames.append(df[df["id"].isin(ids)][["id", "text"]])
+    return pd.concat(frames, ignore_index=True)
 
 
 def main() -> None:
@@ -78,7 +86,7 @@ def main() -> None:
     meta.to_csv(RAW / "metadata.csv", index=False)
     meta[["id", "occupation"]].to_csv(RAW / "sampled_ids.csv", index=False)
 
-    ref = reference_text(set(meta["id"]))
+    ref = reference_text(set(meta["id"]), sorted(shards))
     ref.to_csv(RAW / "reference_text.csv", index=False)
 
     n_cap = (meta["exp_year_raw"] >= CAP).sum()

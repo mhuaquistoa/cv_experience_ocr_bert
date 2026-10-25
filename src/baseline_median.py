@@ -3,7 +3,7 @@ import time
 
 import numpy as np
 
-from utils import MODELS, TARGET, TEXT_VARIANTS, ensure_dirs, load_sets, save_json, save_predictions
+from utils import EVAL_SETS, MODELS, TARGET, TEXT_VARIANTS, ensure_dirs, load_sets, save_json, save_predictions
 
 
 def main() -> None:
@@ -13,7 +13,7 @@ def main() -> None:
         t0 = time.perf_counter()
         median = float(np.median(sets["train"][TARGET]))
         train_s = time.perf_counter() - t0
-        preds = {name: np.full(len(sets[name]), median) for name in ["val", "test", "test_ref", "probe"]}
+        preds = {name: np.full(len(sets[name]), median) for name in EVAL_SETS}
         save_predictions("median", variant, sets, preds,
                          {"train_seconds": train_s, "infer_seconds_per_cv": 0.0})
     save_json({"median": median}, MODELS / "baselines" / "median.json")

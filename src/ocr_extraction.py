@@ -1,8 +1,8 @@
 """Stage 1 - Run PaddleOCR once per image and cache one JSON per CV in data/ocr/.
 
-Model: PP-OCRv5 mobile detection + English recognition, on CPU. The mobile models were chosen
-because OCR runs on a laptop CPU within the deadline; the server models are more accurate but
-several times slower without a GPU build of PaddlePaddle.
+Model: PP-OCRv5_mobile_det + en_PP-OCRv5_mobile_rec, on CPU with oneDNN. The library default
+recognizer (PP-OCRv6_medium_rec) took ~12 s per CV on this laptop vs ~1.4 s for the English mobile
+model, which reads the clean digital CV renders (including dates) almost perfectly.
 
 Each JSON: {id, lines: [{text, score, box: [x0, y0, x1, y1]}], width, height, seconds}.
 Usage: python src/ocr_extraction.py [--workers 4] [--limit N]
@@ -20,9 +20,9 @@ from PIL import Image
 from utils import METRICS, OCR_DIR, RAW_IMAGES, ensure_dirs, load_json, save_json
 
 OCR_CONFIG = dict(
-    lang="en",
-    ocr_version="PP-OCRv5",
     text_detection_model_name="PP-OCRv5_mobile_det",
+    text_recognition_model_name="en_PP-OCRv5_mobile_rec",
+    enable_mkldnn=True,
     use_doc_orientation_classify=False,
     use_doc_unwarping=False,
     use_textline_orientation=False,

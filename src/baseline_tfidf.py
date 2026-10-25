@@ -16,10 +16,10 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.pipeline import make_pipeline, make_union
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from utils import (CAP, MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_years, ensure_dirs,
+from utils import (EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_years, ensure_dirs,
                    load_sets, save_predictions)
 
-ALPHAS = [0.1, 0.3, 1, 3, 10, 30]
+ALPHAS = [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
 
 
 def strip_digits(text: str) -> str:
@@ -50,7 +50,7 @@ def fit_variant(variant: str, keep_digits: bool) -> None:
     train_s = time.perf_counter() - t0
 
     t0 = time.perf_counter()
-    preds = {name: model.predict(sets[name]["text"]) for name in ["val", "test", "test_ref", "probe"]}
+    preds = {name: model.predict(sets[name]["text"]) for name in EVAL_SETS}
     infer = (time.perf_counter() - t0) / sum(len(sets[n]) for n in preds)
     name = "tfidf" if keep_digits else "tfidf_nodigits"
     save_predictions(name, variant, sets, preds, {"train_seconds": train_s,

@@ -14,11 +14,11 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, r2_score
 
-from utils import (BAND_LABELS, MAIN_VARIANT, PREDS, PROCESSED, SEED, TABLES, TARGET, ensure_dirs,
+from utils import (BAND_LABELS, MAIN_VARIANT, PREDS, PROCESSED, SEED, TABLES, TARGET, drop_oldest_job, ensure_dirs,
                    load_json, read_csv, to_band)
 
 MAIN_MODELS = {"median": "Median", "tfidf": "TF-IDF + Ridge", "embeddings": "Embeddings + Ridge",
-               "bert": "Fine-tuned BERT"}
+               "bert": "Fine-tuned BERT", "rules": "Rule-based date sum (bonus)"}
 N_BOOT = 2000
 
 
@@ -78,7 +78,7 @@ def main() -> None:
     if "bert" in test:
         pb = test["bert"].loc[ids, "y_pred"].values
         gains = []
-        for key in ["median", "tfidf", "embeddings"]:
+        for key in ["median", "tfidf", "embeddings", "rules"]:
             if key in test:
                 g, lo, hi = bootstrap_gain(y, test[key].loc[ids, "y_pred"].values, pb, rng)
                 gains.append({"Baseline": MAIN_MODELS[key], "MAE reduction (years)": g, "CI 2.5%": lo,
@@ -116,21 +116,28 @@ def main() -> None:
                              "MAE": sub["error"].abs().mean(), "mean error (pred - true)": sub["error"].mean()})
         pd.DataFrame(fair).round(3).to_csv(TABLES / "fairness.csv", index=False)
 
-    # Question 1 probe, Question 2 OCR vs reference
+    # Question 1 probes, Question 2 OCR vs reference
+    expected_drop = {rid: -(drop_oldest_job(t)[1] or 0) for rid, t in cvs["text_clean"].items()}
     probe_rows, ocr_rows = [], []
     for key, label in MAIN_MODELS.items():
         df, _ = load_preds(key)
         if df is None:
             continue
         base = df[df["set"] == "test"].set_index("id")["y_pred"]
+        # (a) every year +5: durations are unchanged, so a recruiter's estimate would not move
         pr = df[df["set"] == "probe"].set_index("id")["y_pred"]
-        delta = pr - base.loc[pr.index]
-        open_ended = cvs.loc[pr.index, "text_clean"].str.contains(r"present|current", case=False)
-        probe_rows.append({"Model": label, "mean change (years)": delta.mean(),
-                           "mean |change|": delta.abs().mean(),
-                           "mean change, CVs with 'Present' job": delta[open_ended].mean(),
-                           "mean change, CVs without": delta[~open_ended].mean(),
-                           "n_probe": len(delta)})
+        shift = pr - base.loc[pr.index]
+        # (b) oldest job deleted: a recruiter would lower the estimate by about that job's length
+        pd_ = df[df["set"] == "probe_drop"].set_index("id")["y_pred"]
+        drop = pd_ - base.loc[pd_.index]
+        exp = pd.Series({i: expected_drop[i] for i in pd_.index})
+        probe_rows.append({"Model": label,
+                           "+5 shift: mean |change| (ideal 0)": shift.abs().mean(),
+                           "drop job: mean change": drop.mean(),
+                           "drop job: expected change": exp.mean(),
+                           "drop job: share moving down": (drop < -0.1).mean(),
+                           "drop job: corr(change, expected)": drop.corr(exp) if drop.std() > 0 else np.nan,
+                           "n per probe": len(pr)})
         ref = df[df["set"] == "test_ref"]
         mae_ocr = (base.loc[ids] - test[key].loc[ids, "y_true"]).abs().mean()
         mae_ref = (ref["y_pred"] - ref["y_true"]).abs().mean()

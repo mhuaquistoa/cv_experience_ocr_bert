@@ -24,13 +24,11 @@ METRICS = OUTPUT / "metrics"
 
 # Dataset
 HF_DATASET = "sumin-yu/PopResume"
-# Shard prefixes under data/images/<occupation>-NNNN.parquet.
-# TODO: verify the exact prefixes on the dataset page (only registered_nurses is confirmed).
-OCCUPATIONS = [
+OCCUPATIONS = [  # shard prefixes, as listed in data/images/
     "registered_nurses",
-    "elementary_and_middle_school_teachers",
+    "elementary_middle_school_teachers",
     "software_developers",
-    "accountants_and_auditors",
+    "accountants_auditors",
     "construction_laborers",
 ]
 N_PER_OCCUPATION = 400  # minimum allowed (2,000 total) given the compute/time budget
@@ -109,11 +107,40 @@ def shift_years(text: str, shift: int = PROBE_SHIFT) -> str:
     return re.sub(r"\b(19[5-9]\d|20[0-2]\d)\b", lambda m: str(int(m.group(1)) + shift), text)
 
 
+DATE_RANGE = re.compile(r"((?:19|20)\d{2})[.,](\d{1,2})\s*[-–~]\s*((?:19|20)\d{2})[.,](\d{1,2})")
+BULLET = re.compile(r"^\s*[-•·*]")
+
+
+def drop_oldest_job(text: str):
+    """Probe for Question 1: delete the job with the earliest start date (its line + bullets).
+
+    Returns (new_text, years_removed); years_removed is None when the CV has fewer than 2 jobs.
+    """
+    lines = text.split("\n")
+    jobs = []
+    for i, ln in enumerate(lines):
+        m = DATE_RANGE.search(ln)
+        if m:
+            y0, m0, y1, m1 = map(int, m.groups())
+            jobs.append((y0 + m0 / 12, i, (y1 + m1 / 12) - (y0 + m0 / 12)))
+    if len(jobs) < 2:
+        return text, None
+    _, i, dur = min(jobs)
+    j = i + 1
+    while j < len(lines) and BULLET.match(lines[j]):
+        j += 1
+    return "\n".join(lines[:i] + lines[j:]), max(dur, 0.0)
+
+
+EVAL_SETS = ["val", "test", "test_ref", "probe", "probe_drop"]
+
+
 def load_sets(variant: str = MAIN_VARIANT) -> dict:
     """Return {set_name: DataFrame[id, occupation, exp_year, text]} for every evaluation set.
 
-    Sets: train, val, test, test_ref (test CVs with the reference text, Question 2 only)
-    and probe (20 test CVs with every year shifted, Question 1 only).
+    Sets: train, val, test, test_ref (test CVs with the reference text, Question 2 only),
+    probe (20 test CVs with every year shifted +5) and probe_drop (20 test CVs with >= 2 jobs
+    whose oldest job is deleted; column expected_change), both for Question 1 only.
     """
     cvs = read_csv(PROCESSED / "cvs.csv")
     out = {}
@@ -125,6 +152,12 @@ def load_sets(variant: str = MAIN_VARIANT) -> dict:
     out["test_ref"] = out["test"].assign(text=out["test"]["text_ref"].fillna(""))
     probe = out["test"].sample(N_PROBE, random_state=SEED)
     out["probe"] = probe.assign(text=probe["text"].map(shift_years))
+    # built from the cleaned text for every variant (raw OCR has no parseable date ranges);
+    # the probes are only analysed for the main variant
+    dropped = out["test"][f"text_{MAIN_VARIANT}"].fillna("").map(drop_oldest_job)
+    cand = out["test"].assign(text=[d[0] for d in dropped], expected_change=[-(d[1] or 0) for d in dropped])
+    cand = cand[[d[1] is not None for d in dropped]]
+    out["probe_drop"] = cand.sample(min(N_PROBE, len(cand)), random_state=SEED)
     return out
 
 

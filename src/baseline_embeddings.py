@@ -13,12 +13,12 @@ from sentence_transformers import SentenceTransformer
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error
 
-from utils import (MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_years, ensure_dirs, load_sets,
+from utils import (EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, TEXT_VARIANTS, clip_years, ensure_dirs, load_sets,
                    save_predictions, set_seed)
 
 ENCODER = "BAAI/bge-small-en-v1.5"
 CHUNK_WORDS = 250  # ~350 tokens, safely under the 512-token limit
-ALPHAS = [0.1, 0.3, 1, 3, 10, 30]
+ALPHAS = [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
 
 
 def chunks(text: str) -> list:
@@ -59,7 +59,7 @@ def main() -> None:
 
         t0 = time.perf_counter()
         preds = {name: model.predict(embed(encoder, sets[name]["text"].tolist()))
-                 for name in ["val", "test", "test_ref", "probe"]}
+                 for name in EVAL_SETS}
         infer = (time.perf_counter() - t0) / sum(len(sets[n]) for n in preds)
         save_predictions("embeddings", variant, sets, preds,
                          {"train_seconds": train_s, "infer_seconds_per_cv": infer, "alpha": best,
