@@ -38,7 +38,7 @@ def table(name: str, **kw):
 def figure(name: str, caption: str):
     p = FIGURES / name
     if p.exists():
-        st.image(str(p), use_container_width=True)
+        st.image(str(p), width="stretch")
         st.caption(caption)
     else:
         st.warning(f"`output/figures/{name}` not found - run `python src/visualization.py`.")
@@ -103,7 +103,7 @@ with tab2:
             draw = ImageDraw.Draw(img)
             for ln in doc["lines"]:
                 draw.rectangle(ln["box"], outline=(255, 0, 0) if ln["score"] < 0.8 else (0, 160, 0), width=2)
-            col_img.image(img, caption="green: confidence >= 0.8, red: < 0.8", use_container_width=True)
+            col_img.image(img, caption="green: confidence >= 0.8, red: < 0.8", width="stretch")
         col_txt.text_area("Reading order (raw OCR)", reading_order(doc), height=400)
         col_txt.text_area("Model input (cleaned + masked)", prepare(doc), height=300)
     else:
@@ -131,7 +131,7 @@ with tab3:
         ax.scatter(d["y_true"], d["y_pred"], s=12, alpha=0.5)
         ax.plot([0, CAP], [0, CAP], "k--", lw=1)
         ax.set(xlabel="true years", ylabel="predicted years", xlim=(-1, CAP + 1), ylim=(-1, CAP + 1))
-        st.pyplot(fig, use_container_width=False)
+        st.pyplot(fig, width="content")
         st.caption("Points above the dashed line are overestimates. A flat cloud means the model pulls "
                    "every CV toward the middle (overestimating juniors, underestimating seniors).")
         figure(f"confusion_{k}.png", "Band confusion matrix: off-diagonal cells are band errors.")
@@ -172,6 +172,10 @@ def load_models():
 
         enc, ridge = load_encoder(), joblib.load(MODELS / "baselines" / "embeddings_ridge.joblib")
         models["embeddings"] = lambda texts: ridge.predict(embed(enc, texts))
+    if med:
+        from baseline_rules import career_years
+
+        models["rules"] = lambda texts: np.array([career_years(t) or med["median"] for t in texts])
     if (MODELS / "bert" / "best").exists():
         import torch
         from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -212,7 +216,7 @@ with tab4:
                 doc = ocr_image(load_ocr(), str(path))
             text = prepare(doc)
             c1, c2 = st.columns(2)
-            c1.image(str(path), use_container_width=True)
+            c1.image(str(path), width="stretch")
             c2.text_area("Extracted text (cleaned + masked)", text, height=500)
         models = load_models()
         if models:

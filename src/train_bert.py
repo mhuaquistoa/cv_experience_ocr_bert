@@ -27,7 +27,7 @@ from utils import CAP, EVAL_SETS, MAIN_VARIANT, MODELS, TARGET, ensure_dirs, loa
 MODEL_NAME = "distilbert-base-uncased"
 MAX_LEN = 512
 HEAD_TOKENS = 320
-HP = dict(lr=5e-5, batch_size=16, epochs=15, patience=3, warmup=0.1, weight_decay=0.01)
+HP = dict(lr=5e-5, batch_size=16, epochs=20, patience=5, warmup=0.1, weight_decay=0.01)
 YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
 
 
