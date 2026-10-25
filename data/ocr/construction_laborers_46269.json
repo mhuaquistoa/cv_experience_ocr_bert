@@ -1,0 +1,98 @@
+{
+  "id": "construction_laborers_46269",
+  "lines": [
+    {
+      "text": "ROBERT DONALDSON",
+      "score": 0.998471736907959,
+      "box": [
+        115,
+        87,
+        485,
+        123
+      ]
+    },
+    {
+      "text": "PA, USA | +1-798-536-2025 | robert.donaldson@example.com",
+      "score": 0.9912010431289673,
+      "box": [
+        116,
+        149,
+        697,
+        177
+      ]
+    },
+    {
+      "text": "WORK HISTORY",
+      "score": 0.9997279047966003,
+      "box": [
+        117,
+        243,
+        316,
+        270
+      ]
+    },
+    {
+      "text": "Construction Laborers, TrueLine Services, 2020.10—2023.01",
+      "score": 0.9830971956253052,
+      "box": [
+        116,
+        287,
+        676,
+        315
+      ]
+    },
+    {
+      "text": "- Set up ladders and basic scaffolding",
+      "score": 0.9918096661567688,
+      "box": [
+        126,
+        314,
+        477,
+        341
+      ]
+    },
+    {
+      "text": "- Operated hand tools for assembly tasks",
+      "score": 0.9882601499557495,
+      "box": [
+        128,
+        340,
+        509,
+        367
+      ]
+    },
+    {
+      "text": "EDUCATION",
+      "score": 0.9999358654022217,
+      "box": [
+        116,
+        404,
+        268,
+        431
+      ]
+    },
+    {
+      "text": "High school graduate/GED, Construction Foundations, Northfield Ridge High School, 2021",
+      "score": 0.9917033910751343,
+      "box": [
+        116,
+        446,
+        951,
+        475
+      ]
+    },
+    {
+      "text": "Completed coursework in framing hardware usage",
+      "score": 0.9880631566047668,
+      "box": [
+        131,
+        472,
+        616,
+        501
+      ]
+    }
+  ],
+  "width": 1241,
+  "height": 1754,
+  "seconds": 3.5906647999654524
+}

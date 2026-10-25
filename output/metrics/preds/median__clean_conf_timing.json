@@ -1,0 +1,4 @@
+{
+  "train_seconds": 0.00021889997879043221,
+  "infer_seconds_per_cv": 0.0
+}

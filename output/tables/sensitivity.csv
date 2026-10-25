@@ -1,0 +1,9 @@
+model,clean,clean_conf,raw
+bert,0.315,0.298,0.226
+bert_head,0.223,,
+bert_huber,0.212,,
+embeddings,1.308,1.308,1.579
+median,3.591,3.591,3.591
+rules,0.022,0.022,3.598
+tfidf,1.011,1.011,1.04
+tfidf_nodigits,1.821,1.821,1.771

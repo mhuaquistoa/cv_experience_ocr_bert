@@ -1,0 +1,5 @@
+Baseline,MAE reduction (years),CI 2.5%,CI 97.5%,Significant (CI excludes 0)
+Median,3.276,2.957,3.601,True
+TF-IDF + Ridge,0.697,0.589,0.797,True
+Embeddings + Ridge,0.993,0.876,1.125,True
+Rule-based date sum (bonus),-0.293,-0.321,-0.265,True

@@ -1,0 +1,106 @@
+{
+  "train_seconds": 144.62747969996417,
+  "infer_seconds_per_cv": 0.001323750319127786,
+  "model": "distilbert-base-uncased",
+  "max_len": 512,
+  "head_tokens": 320,
+  "strategy": "head_tail",
+  "loss": "mse",
+  "seed": 42,
+  "lr": 5e-05,
+  "batch_size": 16,
+  "epochs": 20,
+  "patience": 5,
+  "warmup": 0.1,
+  "weight_decay": 0.01,
+  "best_val_mae": 0.21980497544772357,
+  "history": [
+    {
+      "epoch": 1,
+      "val_mae": 1.738490319651918
+    },
+    {
+      "epoch": 2,
+      "val_mae": 0.8101980481582044
+    },
+    {
+      "epoch": 3,
+      "val_mae": 0.5824462932915456
+    },
+    {
+      "epoch": 4,
+      "val_mae": 0.5492918519320937
+    },
+    {
+      "epoch": 5,
+      "val_mae": 0.47308541436551416
+    },
+    {
+      "epoch": 6,
+      "val_mae": 0.395420122308352
+    },
+    {
+      "epoch": 7,
+      "val_mae": 0.40853394715725205
+    },
+    {
+      "epoch": 8,
+      "val_mae": 0.3208129323193738
+    },
+    {
+      "epoch": 9,
+      "val_mae": 0.3079362592389966
+    },
+    {
+      "epoch": 10,
+      "val_mae": 0.445164554433283
+    },
+    {
+      "epoch": 11,
+      "val_mae": 0.28317383848249666
+    },
+    {
+      "epoch": 12,
+      "val_mae": 0.30385090108976875
+    },
+    {
+      "epoch": 13,
+      "val_mae": 0.27907000801620435
+    },
+    {
+      "epoch": 14,
+      "val_mae": 0.25775942192519014
+    },
+    {
+      "epoch": 15,
+      "val_mae": 0.2800990007475094
+    },
+    {
+      "epoch": 16,
+      "val_mae": 0.3224912542501912
+    },
+    {
+      "epoch": 17,
+      "val_mae": 0.24564294425402305
+    },
+    {
+      "epoch": 18,
+      "val_mae": 0.21980497544772357
+    },
+    {
+      "epoch": 19,
+      "val_mae": 0.2296289299962381
+    },
+    {
+      "epoch": 20,
+      "val_mae": 0.23337746442284824
+    }
+  ],
+  "truncation": {
+    "share_longer_than_max_len": 0.0,
+    "tokens_median": 118.0,
+    "tokens_p90": 159.10000000000014,
+    "share_years_surviving_truncation": 1.0
+  },
+  "hardware": "NVIDIA GeForce RTX 5050 Laptop GPU"
+}

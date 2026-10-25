@@ -1,0 +1,8 @@
+{
+  "n_cvs": 2000,
+  "cvs_with_any_mask": 0,
+  "cvs_masked_total_experience": 0,
+  "cvs_masked_age": 0,
+  "cvs_masked_date_of_birth": 0,
+  "conf_threshold": 0.8
+}

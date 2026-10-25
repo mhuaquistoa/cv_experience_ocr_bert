@@ -1,0 +1,82 @@
+{
+  "train_seconds": 93.03247219999321,
+  "infer_seconds_per_cv": 0.0012014152127332945,
+  "model": "distilbert-base-uncased",
+  "max_len": 512,
+  "head_tokens": 320,
+  "strategy": "head_tail",
+  "loss": "mse",
+  "seed": 42,
+  "lr": 5e-05,
+  "batch_size": 16,
+  "epochs": 20,
+  "patience": 5,
+  "warmup": 0.1,
+  "weight_decay": 0.01,
+  "best_val_mae": 0.3004089325102403,
+  "history": [
+    {
+      "epoch": 1,
+      "val_mae": 2.0941801774824067
+    },
+    {
+      "epoch": 2,
+      "val_mae": 0.9001536537458064
+    },
+    {
+      "epoch": 3,
+      "val_mae": 0.6940830098943013
+    },
+    {
+      "epoch": 4,
+      "val_mae": 0.5356056180068981
+    },
+    {
+      "epoch": 5,
+      "val_mae": 0.3952113607933188
+    },
+    {
+      "epoch": 6,
+      "val_mae": 0.3715836218237545
+    },
+    {
+      "epoch": 7,
+      "val_mae": 0.4421814078173667
+    },
+    {
+      "epoch": 8,
+      "val_mae": 0.42203445053353045
+    },
+    {
+      "epoch": 9,
+      "val_mae": 0.3004089325102403
+    },
+    {
+      "epoch": 10,
+      "val_mae": 0.3209536078117224
+    },
+    {
+      "epoch": 11,
+      "val_mae": 0.31253859627673714
+    },
+    {
+      "epoch": 12,
+      "val_mae": 0.41310269925727966
+    },
+    {
+      "epoch": 13,
+      "val_mae": 0.31858784382894956
+    },
+    {
+      "epoch": 14,
+      "val_mae": 0.37453614274042274
+    }
+  ],
+  "truncation": {
+    "share_longer_than_max_len": 0.0,
+    "tokens_median": 94.5,
+    "tokens_p90": 136.0,
+    "share_years_surviving_truncation": 1.0
+  },
+  "hardware": "NVIDIA GeForce RTX 5050 Laptop GPU"
+}

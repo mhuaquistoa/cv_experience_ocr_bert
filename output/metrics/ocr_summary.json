@@ -1,0 +1,21 @@
+{
+  "n_cvs": 2000,
+  "seconds_per_cv_mean": 4.09,
+  "seconds_per_cv_median": 3.6,
+  "mean_confidence": 0.9907,
+  "lines_per_cv_mean": 14.4,
+  "empty_outputs": 0,
+  "failed_images": 0,
+  "wall_clock_minutes": 5.8,
+  "workers": 4,
+  "threads_per_worker": 5,
+  "hardware": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (20 logical cores), CPU inference",
+  "config": {
+    "text_detection_model_name": "PP-OCRv5_mobile_det",
+    "text_recognition_model_name": "en_PP-OCRv5_mobile_rec",
+    "enable_mkldnn": true,
+    "use_doc_orientation_classify": false,
+    "use_doc_unwarping": false,
+    "use_textline_orientation": false
+  }
+}
