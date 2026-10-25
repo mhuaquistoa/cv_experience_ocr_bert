@@ -1,0 +1,106 @@
+{
+  "train_seconds": 8613.57372419996,
+  "infer_seconds_per_cv": 0.0011122306382798767,
+  "model": "distilbert-base-uncased",
+  "max_len": 512,
+  "head_tokens": 320,
+  "strategy": "head",
+  "loss": "mse",
+  "seed": 42,
+  "lr": 5e-05,
+  "batch_size": 16,
+  "epochs": 20,
+  "patience": 5,
+  "warmup": 0.1,
+  "weight_decay": 0.01,
+  "best_val_mae": 0.23071738780471057,
+  "history": [
+    {
+      "epoch": 1,
+      "val_mae": 2.1316429261252514
+    },
+    {
+      "epoch": 2,
+      "val_mae": 0.9259344452546577
+    },
+    {
+      "epoch": 3,
+      "val_mae": 0.6174341300357841
+    },
+    {
+      "epoch": 4,
+      "val_mae": 0.5894959682582235
+    },
+    {
+      "epoch": 5,
+      "val_mae": 0.42242032028505316
+    },
+    {
+      "epoch": 6,
+      "val_mae": 0.3905711252450263
+    },
+    {
+      "epoch": 7,
+      "val_mae": 0.49249289718950584
+    },
+    {
+      "epoch": 8,
+      "val_mae": 0.42009079372616187
+    },
+    {
+      "epoch": 9,
+      "val_mae": 0.324601979915887
+    },
+    {
+      "epoch": 10,
+      "val_mae": 0.3547063414123021
+    },
+    {
+      "epoch": 11,
+      "val_mae": 0.3113876397953654
+    },
+    {
+      "epoch": 12,
+      "val_mae": 0.511535442001819
+    },
+    {
+      "epoch": 13,
+      "val_mae": 0.34997150842177394
+    },
+    {
+      "epoch": 14,
+      "val_mae": 0.3460587354926429
+    },
+    {
+      "epoch": 15,
+      "val_mae": 0.27743595105256363
+    },
+    {
+      "epoch": 16,
+      "val_mae": 0.2613480521607652
+    },
+    {
+      "epoch": 17,
+      "val_mae": 0.25602516088021815
+    },
+    {
+      "epoch": 18,
+      "val_mae": 0.26252073804556064
+    },
+    {
+      "epoch": 19,
+      "val_mae": 0.23071738780471057
+    },
+    {
+      "epoch": 20,
+      "val_mae": 0.2651560016234936
+    }
+  ],
+  "truncation": {
+    "share_longer_than_max_len": 0.0,
+    "tokens_median": 94.5,
+    "tokens_p90": 136.0,
+    "share_years_surviving_truncation": 1.0
+  },
+  "hardware": "NVIDIA GeForce RTX 5050 Laptop GPU"
+}

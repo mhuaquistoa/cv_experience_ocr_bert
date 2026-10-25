@@ -1,0 +1,6 @@
+Model,+5 shift: mean |change| (ideal 0),drop job: mean change,drop job: expected change,drop job: share moving down,"drop job: corr(change, expected)",n per probe
+Median,0.0,0.0,-2.571,0.0,,20
+TF-IDF + Ridge,1.956,-1.178,-2.571,0.95,0.566,20
+Embeddings + Ridge,2.443,-2.305,-2.571,1.0,0.469,20
+Fine-tuned BERT,1.337,-2.79,-2.571,1.0,0.897,20
+Rule-based date sum (bonus),0.0,-2.571,-2.571,1.0,1.0,20

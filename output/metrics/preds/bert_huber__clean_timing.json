@@ -1,0 +1,106 @@
+{
+  "train_seconds": 132.48989580001216,
+  "infer_seconds_per_cv": 0.0011907880850869448,
+  "model": "distilbert-base-uncased",
+  "max_len": 512,
+  "head_tokens": 320,
+  "strategy": "head_tail",
+  "loss": "huber",
+  "seed": 42,
+  "lr": 5e-05,
+  "batch_size": 16,
+  "epochs": 20,
+  "patience": 5,
+  "warmup": 0.1,
+  "weight_decay": 0.01,
+  "best_val_mae": 0.2107567843277508,
+  "history": [
+    {
+      "epoch": 1,
+      "val_mae": 1.1805478441702293
+    },
+    {
+      "epoch": 2,
+      "val_mae": 0.7198178476358305
+    },
+    {
+      "epoch": 3,
+      "val_mae": 0.5687124388750366
+    },
+    {
+      "epoch": 4,
+      "val_mae": 0.6569324175414744
+    },
+    {
+      "epoch": 5,
+      "val_mae": 0.41957070966195875
+    },
+    {
+      "epoch": 6,
+      "val_mae": 0.3965289158525311
+    },
+    {
+      "epoch": 7,
+      "val_mae": 0.5769792904650036
+    },
+    {
+      "epoch": 8,
+      "val_mae": 0.4279843694786683
+    },
+    {
+      "epoch": 9,
+      "val_mae": 0.3373276949638876
+    },
+    {
+      "epoch": 10,
+      "val_mae": 0.2891223777149543
+    },
+    {
+      "epoch": 11,
+      "val_mae": 0.27692991169530917
+    },
+    {
+      "epoch": 12,
+      "val_mae": 0.3821084038959278
+    },
+    {
+      "epoch": 13,
+      "val_mae": 0.3316960186586963
+    },
+    {
+      "epoch": 14,
+      "val_mae": 0.3513257201785189
+    },
+    {
+      "epoch": 15,
+      "val_mae": 0.2720276753685768
+    },
+    {
+      "epoch": 16,
+      "val_mae": 0.25396009245879136
+    },
+    {
+      "epoch": 17,
+      "val_mae": 0.23779974252188765
+    },
+    {
+      "epoch": 18,
+      "val_mae": 0.22270749538519813
+    },
+    {
+      "epoch": 19,
+      "val_mae": 0.2107567843277508
+    },
+    {
+      "epoch": 20,
+      "val_mae": 0.22540847902566394
+    }
+  ],
+  "truncation": {
+    "share_longer_than_max_len": 0.0,
+    "tokens_median": 94.5,
+    "tokens_p90": 136.0,
+    "share_years_surviving_truncation": 1.0
+  },
+  "hardware": "NVIDIA GeForce RTX 5050 Laptop GPU"
+}

@@ -1,0 +1,108 @@
+{
+  "id": "construction_laborers_03016",
+  "lines": [
+    {
+      "text": "LAUREN BRUCE",
+      "score": 0.9951577186584473,
+      "box": [
+        117,
+        91,
+        384,
+        122
+      ]
+    },
+    {
+      "text": "CA, USA | +1-993-326-2989 | lauren.bruce@example.com",
+      "score": 0.9896389842033386,
+      "box": [
+        117,
+        150,
+        657,
+        177
+      ]
+    },
+    {
+      "text": "WORK HISTORY",
+      "score": 0.9997487664222717,
+      "box": [
+        117,
+        243,
+        316,
+        270
+      ]
+    },
+    {
+      "text": "Construction Laborers, SteadyBuild Co., 2020.01—2023.01",
+      "score": 0.9812288880348206,
+      "box": [
+        116,
+        287,
+        657,
+        315
+      ]
+    },
+    {
+      "text": "- Marked measurements on materials",
+      "score": 0.9957062005996704,
+      "box": [
+        126,
+        314,
+        475,
+        339
+      ]
+    },
+    {
+      "text": "- Handled power tools under supervision",
+      "score": 0.9944527745246887,
+      "box": [
+        129,
+        340,
+        501,
+        364
+      ]
+    },
+    {
+      "text": "EDUCATION",
+      "score": 0.9999501705169678,
+      "box": [
+        116,
+        404,
+        268,
+        431
+      ]
+    },
+    {
+      "text": "Some college (no degree), Construction Drafting, Brookstone University, 2021",
+      "score": 0.9935410022735596,
+      "box": [
+        115,
+        445,
+        836,
+        476
+      ]
+    },
+    {
+      "text": "Completed coursework in demolition procedures",
+      "score": 0.9901185631752014,
+      "box": [
+        131,
+        472,
+        597,
+        500
+      ]
+    },
+    {
+      "text": "Completed coursework in basic earthmoving techniques",
+      "score": 0.9991667866706848,
+      "box": [
+        132,
+        497,
+        665,
+        526
+      ]
+    }
+  ],
+  "width": 1241,
+  "height": 1754,
+  "seconds": 3.3065734999836423
+}

@@ -1,0 +1,5 @@
+{
+  "train_seconds": 0.0,
+  "infer_seconds_per_cv": 5.374787229192542e-06,
+  "share_test_cvs_with_dates": 0.03333333333333333
+}

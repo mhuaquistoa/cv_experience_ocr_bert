@@ -1,0 +1,6 @@
+attribute,group,n,MAE,mean error (pred - true)
+sex,Female,148,0.35,0.147
+sex,Male,152,0.28,0.006
+race,Asian/Pacific Islander,33,0.255,0.094
+race,Black,21,0.41,0.05
+race,White,246,0.315,0.075

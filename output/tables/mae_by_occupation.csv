@@ -1,0 +1,6 @@
+occupation,Median,TF-IDF + Ridge,Embeddings + Ridge,Fine-tuned BERT,Rule-based date sum (bonus)
+accountants_auditors,3.268,1.019,1.353,0.26,0.019
+construction_laborers,3.733,1.022,1.364,0.283,0.022
+elementary_middle_school_teachers,4.119,1.226,1.253,0.255,0.027
+registered_nurses,3.21,0.847,1.334,0.435,0.022
+software_developers,3.619,0.943,1.237,0.341,0.017

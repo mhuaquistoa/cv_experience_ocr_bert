@@ -9,6 +9,8 @@ venv/
 # Data: images and raw downloads are regenerated with src/download_data.py
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/sampled_ids.csv
+!data/raw/metadata.csv
 
 # Model weights are regenerated with src/baseline_*.py and src/train_bert.py
 models/*/*

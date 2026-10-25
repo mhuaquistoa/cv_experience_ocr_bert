@@ -1,0 +1,6 @@
+Model,MAE on OCR text,MAE on reference text,Gap (OCR - reference)
+Median,3.591,3.591,0.0
+TF-IDF + Ridge,1.011,1.017,-0.005
+Embeddings + Ridge,1.308,1.342,-0.034
+Fine-tuned BERT,0.315,0.45,-0.135
+Rule-based date sum (bonus),0.022,0.02,0.002

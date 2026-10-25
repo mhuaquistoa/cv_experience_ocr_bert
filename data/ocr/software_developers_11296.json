@@ -1,0 +1,108 @@
+{
+  "id": "software_developers_11296",
+  "lines": [
+    {
+      "text": "JESUS MAYO",
+      "score": 0.9997255206108093,
+      "box": [
+        115,
+        89,
+        338,
+        123
+      ]
+    },
+    {
+      "text": "CT, USA | +1-229-619-3563 | jesus.mayo@example.com",
+      "score": 0.9815937876701355,
+      "box": [
+        116,
+        149,
+        645,
+        177
+      ]
+    },
+    {
+      "text": "WORK HISTORY",
+      "score": 0.9994752407073975,
+      "box": [
+        116,
+        243,
+        316,
+        270
+      ]
+    },
+    {
+      "text": "Software Developers, Flowfield Labs, 2019.10—2022.07",
+      "score": 0.9900768995285034,
+      "box": [
+        115,
+        287,
+        630,
+        315
+      ]
+    },
+    {
+      "text": "- Debugged runtime errors",
+      "score": 0.9947978258132935,
+      "box": [
+        125,
+        313,
+        376,
+        342
+      ]
+    },
+    {
+      "text": "- Handled feature toggles",
+      "score": 0.9579179883003235,
+      "box": [
+        126,
+        337,
+        366,
+        367
+      ]
+    },
+    {
+      "text": "EDUCATION",
+      "score": 0.9999380111694336,
+      "box": [
+        116,
+        404,
+        268,
+        431
+      ]
+    },
+    {
+      "text": "Some college (no degree), Meadowview University, 2014",
+      "score": 0.9966311454772949,
+      "box": [
+        117,
+        447,
+        645,
+        474
+      ]
+    },
+    {
+      "text": "• Studied principles of garbage collection",
+      "score": 0.9768461585044861,
+      "box": [
+        129,
+        475,
+        511,
+        499
+      ]
+    },
+    {
+      "text": "Studied principles of mutexes and semaphores",
+      "score": 0.990896463394165,
+      "box": [
+        131,
+        497,
+        583,
+        525
+      ]
+    }
+  ],
+  "width": 1241,
+  "height": 1754,
+  "seconds": 2.488714799983427
+}

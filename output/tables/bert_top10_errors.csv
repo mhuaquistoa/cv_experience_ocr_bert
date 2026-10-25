@@ -1,0 +1,139 @@
+id,y_true,y_pred,error,occupation,text_excerpt,cause
+software_developers_27287,2.36,1.05,-1.31,software_developers,"| | 
+WORK HISTORY
+Software Developers, Datapath Solutions, 2019.05-2021.09
+- Wrote integration tests
+- Assisted with container setup
+EDUCATION
+Bachelor's, Granite Hill University, 2016
+•Studied principles of test-driven development
+•Studied fundamentals of error handling","other: single short job (1 job), model pulled toward the mean"
+software_developers_50950,7.08,8.2,1.12,software_developers,"| | 
+WORK HISTORY
+Software Developers, Cloudspring Systems, 2020.09-2023.01
+- Defined quality assurance frameworks
+- Defined integration standards
+Software Developers, Flowpoint Tech, 2017.09-2020.01
+- Implemented backend services
+- Implemented error handling frameworks
+Software Developers, Openframe Digital, 2014.03-2016.08
+- Updated routing logic
+- Assisted with database queries
+EDUCATION
+Master's, Lakeside University, 2008
+Bachelor's, Oakridge University, 2006
+•Studied principles of computational thinking
+• Studied fundamentals of responsive design",career gap: 1.8y of gaps; prediction closer to full span 8.8y than to sum
+construction_laborers_11842,5.7,4.61,-1.08,construction_laborers,"| | 
+WORK HISTORY
+Construction Laborers, TrueFrame Builders, 2018.12-2021.10
+- Supervised multiple work crews
+- Implemented workflow optimization
+Construction Laborers, Unified Craft Builders, 2014.10-2017.08
+- Prepared scaffolding platforms
+- Set up workstations for crews
+EDUCATION
+High school graduate/GED, Construction Skills, Rolling Hills High School, 2012
+• Completed coursework in basic structural demolition","other (2 jobs, gaps 1.3y)"
+registered_nurses_25349,1.33,2.41,1.08,registered_nurses,"| | 
+WORK HISTORY
+Registered Nurses, KindHands Nursing, 2018.09-2020.01
+- Monitored patient recovery
+- Maintained infection control protocols
+EDUCATION
+Bachelor's, Human Biology, Golden Meadow University, 2018
+• Studied principles of hematologic nursing basics
+Studied principles of health screening","other: single short job (1 job), model pulled toward the mean"
+registered_nurses_15056,6.31,7.36,1.05,registered_nurses,"| | 
+WORK HISTORY
+Registered Nurses, NewPath Nursing Group, 2020.12-2023.01
+- Managed clinical workflow redesign
+- Managed patient outcome evaluation systems
+Registered Nurses, Caring Bridge Nursing, 2017.02-2019.03
+- Conducted comprehensive patient assessments
+- Coordinated patient follow-ups
+Registered Nurses, Caring Way Care, 2014.06-2016.08
+- Performed blood glucose testing
+- Checked patient identification
+EDUCATION
+Associate's degree, Geriatric Care, Pioneer University, 2010
+• Studied principles of hospice care
+•Studied principles of infection surveillance",career gap: 2.2y of gaps; prediction closer to full span 8.6y than to sum
+registered_nurses_13710,7.31,8.34,1.04,registered_nurses,"| | 
+WORK HISTORY
+Registered Nurses, SafeHands Health Group, 2020.08-2023.01
+- Designed clinical care protocols
+- Directed nursing process improvements
+Registered Nurses, ClearBridge Health Group, 2017.09-2020.02
+- Administered chemotherapy protocols
+- Coordinated patient discharge planning
+Registered Nurses, Compassionate Path Medical, 2014.09-2017.03
+- Collected patient health histories
+- Recorded patient vital signs
+EDUCATION
+Associate's degree, Human Biology, Clear Spring University, 2001
+•Completed coursework in palliative care basics
+Completed coursework in care plan development",career gap: 1.0y of gaps; prediction closer to full span 8.3y than to sum
+construction_laborers_11818,16.27,15.28,-0.99,construction_laborers,"| | 
+WORK HISTORY
+Construction Laborers, AnchorBuild Co., 2019.01-2023.01
+- Led operational planning
+- Reviewed compliance documentation
+Construction Laborers, SteadyHand Builders, 2014.12-2019.01
+- Managed construction schedules
+- Developed construction workflows
+Construction Laborers, IronTrack Contractors, 2010.11-2014.12
+- Performed site leveling tasks
+- Installed roofing materials
+Construction Laborers, BuildRight Contractors, 2006.10-2010.11
+- Prepared scaffolding platforms
+- Followed safety procedures on site
+EDUCATION
+High school graduate/GED, Construction Technology, Fairfield High Sc","other: long career (4 jobs), underestimated (regression to the mean)"
+registered_nurses_02317,15.94,14.99,-0.95,registered_nurses,"| | 
+WORK HISTORY
+Registered Nurses, BrightSpring Health Services, 2019.02-2023.01
+- Implemented patient monitoring systems
+- Managed clinical compliance programs
+Registered Nurses, NewBridge Care Center, 2015.02-2019.02
+- Directed emergency response planning
+- Developed nursing policy frameworks
+Registered Nurses, BrightLife Health Services, 2011.02-2015.02
+- Monitored cardiac telemetry
+- Provided wound care management
+Registered Nurses, LifeSpring Nursing, 2005.07-2009.07
+- Monitored patient recovery
+- Recorded shift handoff notes
+EDUCATION
+Associate's degree, Health Services Administration,","other: long career (4 jobs), underestimated (regression to the mean)"
+accountants_auditors_15873,6.77,7.7,0.93,accountants_auditors,"| | 
+WORK HISTORY
+Accountants Auditors, AccuLedger Group, 2020.10-2023.01
+- Directed financial system architecture
+- Designed financial control environments
+Accountants Auditors, FairBalance Group, 2017.10-2020.01
+- Reviewed accounting estimates
+- Prepared working capital analysis
+Accountants Auditors, ClearBalance Advisors, 2014.03-2016.06
+- Reviewed timesheets for payroll
+- Updated accounting policies documentation
+EDUCATION
+Bachelor's, Public Accounting, Silverview University, 2013
+•Studied principles of financial planning
+Completed coursework in expense cycle management",career gap: 2.1y of gaps; prediction closer to full span 8.8y than to sum
+accountants_auditors_60117,17.6,18.5,0.89,accountants_auditors,"| | 
+WORK HISTORY
+Accountants Auditors, Reliable Accounts Co., 2018.09-2023.01
+- Established tax compliance frameworks
+- Directed enterprise accounting platforms
+Accountants Auditors, Balanced Path Financial, 2014.04-2018.09
+- Designed audit methodologies
+- Established financial data governance
+Accountants Auditors, Accurate Balance Advisors, 2008.03-2012.08
+- Managed monthly close processes
+- Analyzed financial trends
+Accountants Auditors, CoreCount Services, 2003.04-2007.09
+- Maintained chart of accounts
+- Processed journal corrections
+EDUCATION
+Bachelor's, Enterprise Management, Meadowfield",career gap: 2.2y of gaps; prediction closer to full span 19.8y than to sum

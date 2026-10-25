@@ -1,0 +1,43 @@
+{
+  "n_cvs": 2000,
+  "cer_mean": 0.0092,
+  "cer_median": 0.0092,
+  "wer_mean": 0.0467,
+  "wer_median": 0.046,
+  "years_read_correctly": 0.8192,
+  "cvs_with_all_years_correct": 0.2945,
+  "years_read_correctly_after_dash_repair": 1.0,
+  "cvs_with_all_years_correct_after_repair": 1.0,
+  "by_occupation": {
+    "accountants_auditors": {
+      "cer": 0.0089,
+      "wer": 0.0451,
+      "years_recall": 0.8485,
+      "years_recall_repaired": 1.0
+    },
+    "construction_laborers": {
+      "cer": 0.0075,
+      "wer": 0.0393,
+      "years_recall": 0.8416,
+      "years_recall_repaired": 1.0
+    },
+    "elementary_middle_school_teachers": {
+      "cer": 0.0082,
+      "wer": 0.0399,
+      "years_recall": 0.8679,
+      "years_recall_repaired": 1.0
+    },
+    "registered_nurses": {
+      "cer": 0.0101,
+      "wer": 0.0513,
+      "years_recall": 0.7676,
+      "years_recall_repaired": 1.0
+    },
+    "software_developers": {
+      "cer": 0.0112,
+      "wer": 0.0579,
+      "years_recall": 0.7704,
+      "years_recall_repaired": 1.0
+    }
+  }
+}
