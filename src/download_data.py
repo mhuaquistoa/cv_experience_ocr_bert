@@ -1,19 +1,90 @@
-"""Stage 0 - Stratified sampling (800 no-photo CVs per occupation) from PopResume.
+"""Stage 0 - Stratified sampling of no-photo CVs per occupation from PopResume.
 
-Output: data/raw/images/<id>.png, data/raw/metadata.csv, data/raw/sampled_ids.csv,
-data/raw/reference_text.csv (reference text only for OCR quality, never a feature)."""
-from utils import ensure_dirs, set_seed
+Output:
+    data/raw/images/<id>.png
+    data/raw/metadata.csv        id, occupation, exp_year (raw and capped), sex, race (fairness only)
+    data/raw/sampled_ids.csv     list of sampled IDs (reproducibility)
+    data/raw/reference_text.csv  id, text (reference only for OCR quality, never a model feature)
+
+Usage: python src/download_data.py [--n 400]
+"""
+import argparse
+import io
+import re
+from collections import defaultdict
+
+import pandas as pd
+from datasets import load_dataset
+from huggingface_hub import HfApi
+from PIL import Image
+
+from utils import CAP, HF_DATASET, N_PER_OCCUPATION, RAW, RAW_IMAGES, SEED, TARGET, ensure_dirs, set_seed
+
+META_COLS = ["sex", "race"]  # kept only for the fairness check
+
+
+def image_shards() -> dict:
+    """Map occupation prefix -> list of hf:// shard paths, discovered from the repo."""
+    files = HfApi().list_repo_files(HF_DATASET, repo_type="dataset")
+    shards = defaultdict(list)
+    for f in files:
+        m = re.match(r"data/images/(.+)-\d+\.parquet$", f)
+        if m:
+            shards[m.group(1)].append(f"hf://datasets/{HF_DATASET}/{f}")
+    return dict(shards)
+
+
+def save_image(img, path) -> None:
+    if isinstance(img, dict):  # {"bytes": ..., "path": ...}
+        img = Image.open(io.BytesIO(img["bytes"]))
+    img.convert("RGB").save(path)
+
+
+def sample_occupation(occupation: str, files: list, n: int) -> list:
+    ds = load_dataset("parquet", data_files=files, split="train", streaming=True)
+    ds = ds.filter(lambda r: not r["has_photo"]).shuffle(seed=SEED, buffer_size=5000)
+    rows = []
+    for r in ds.take(n):
+        rid = str(r["id"])
+        save_image(r["image"], RAW_IMAGES / f"{rid}.png")
+        row = {"id": rid, "occupation": occupation, "exp_year_raw": r[TARGET]}
+        row.update({c: r.get(c) for c in META_COLS})
+        rows.append(row)
+    print(f"  {occupation}: {len(rows)} CVs")
+    return rows
+
+
+def reference_text(ids: set) -> pd.DataFrame:
+    ds = load_dataset(HF_DATASET, "text", split="train")
+    ds = ds.filter(lambda r: str(r["id"]) in ids)
+    return pd.DataFrame({"id": [str(i) for i in ds["id"]], "text": ds["text"]})
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n", type=int, default=N_PER_OCCUPATION, help="CVs per occupation")
+    args = parser.parse_args()
     set_seed()
     ensure_dirs()
-    # TODO:
-    # 1. Stream each occupation's image shards, keep has_photo == False, shuffle(seed=42)
-    # 2. take(N_PER_OCCUPATION), save images + metadata (id, occupation, exp_year, sex, race)
-    # 3. Load the 'text' config and keep id + text for the sampled CVs
-    # 4. Report how many CVs sit at the cap (CAP)
-    raise NotImplementedError
+
+    shards = image_shards()
+    print(f"Occupations found: {sorted(shards)}")
+    rows = []
+    for occupation, files in sorted(shards.items()):
+        rows += sample_occupation(occupation, sorted(files), args.n)
+
+    meta = pd.DataFrame(rows)
+    meta[TARGET] = meta["exp_year_raw"].clip(0, CAP)
+    meta.to_csv(RAW / "metadata.csv", index=False)
+    meta[["id", "occupation"]].to_csv(RAW / "sampled_ids.csv", index=False)
+
+    ref = reference_text(set(meta["id"]))
+    ref.to_csv(RAW / "reference_text.csv", index=False)
+
+    n_cap = (meta["exp_year_raw"] >= CAP).sum()
+    print(f"\nSampled {len(meta)} CVs, reference text for {len(ref)}")
+    print(f"CVs at or above the cap ({CAP}): {n_cap} ({n_cap / len(meta):.1%})")
+    print(meta.groupby("occupation")[TARGET].describe().round(1))
 
 
 if __name__ == "__main__":
